@@ -47,6 +47,12 @@ int main(int argc, char** argv){
 
     int num_of_thread, num_of_process, current_rank;
     num_of_thread = 30;
+    //-------------------pthread initialize-----------------------
+
+    pthread_t* thread_handles;
+
+    thread_handles = ;
+
     //-------------------MPI initialize-----------------------
     MPI_Init(NULL,NULL);
     MPI_Comm_size(MPI_COMM_WORLD, &num_of_process);
