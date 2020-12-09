@@ -24,7 +24,7 @@ basis::basis(int basisInteger, double *parameterIn){
     basis::basisInteger = basisInteger;
 
     complexNumber complexZero(0,1);
-    for(auto i0 = 0; i0< numberOfGrid;i0++){
+    for(int i0 = 0; i0< numberOfGrid;i0++){
         waveFunctionIn.push_back(complexZero);
         leftWaveFunction.push_back(complexZero);
         rightWaveFunction.push_back(complexZero);
@@ -73,7 +73,7 @@ void basis::setCosPotential(int basisInteger) {
 
     double potentialPerGrid;
     double insertTerm;
-    for(auto i0 = 0; i0<numberOfGrid;i0++){
+    for(int i0 = 0; i0<numberOfGrid;i0++){
         insertTerm = potentialFreq*(i0*gridDistance+(siteDistance+gridDistance*(numberOfGrid-1))*basisInteger);
         potentialPerGrid = potentialV*cos(insertTerm);
 
@@ -85,8 +85,8 @@ void basis::setCosPotential(int basisInteger) {
 void basis::setDistanceSquare() {//It is in setStrainPotential
 
     double distance;
-    for(auto i0=0;i0<numberOfGrid;i0++){
-        for (auto i1 = 0;i1<numberOfGrid;i1++){
+    for(int i0=0;i0<numberOfGrid;i0++){
+        for (int i1 = 0;i1<numberOfGrid;i1++){
             distance = siteDistance + gridDistance * (numberOfGrid + i0 - i1 - 1);
             leftSpaceDifferenceSquare.push_back(elasticConstant*distance*distance/2);
             distance = siteDistance + gridDistance * (numberOfGrid - i0 + i1 - 1);
@@ -99,9 +99,9 @@ void basis::setStrainPotential(CNVector_t leftWaveFunction, CNVector_t rightWave
 
     setDistanceSquare();
     double energy;
-    for(auto i0=0;i0<numberOfGrid;i0++){
+    for(int i0=0;i0<numberOfGrid;i0++){
         energy = 0;
-        for(auto i1=0;i1<numberOfGrid;i1++) {
+        for(int i1=0;i1<numberOfGrid;i1++) {
             energy += leftSpaceDifferenceSquare[numberOfGrid*i0+i1] * leftWaveFunction[i1].absValue();
             energy += rightSpaceDifferenceSquare[numberOfGrid*i0+i1] * rightWaveFunction[i1].absValue();
         }
@@ -115,7 +115,7 @@ void basis::setMomentumEnergy() {
 
     double divideFactor = 2*gridDistance;
     int endInteger = numberOfGrid-1;
-    for(auto i0=0;i0<numberOfGrid;i0++){
+    for(int i0=0;i0<numberOfGrid;i0++){
         if(i0==0){
             result=waveFunctionIn[1]/divideFactor;
         } else if(i0==endInteger){
@@ -135,7 +135,7 @@ void basis::setPulseInput(double timeAU) {
     double delayedTime = timeAU - pulseDelay;
     pulseAmpPerTime = pulseAmp*cos(pulseFreq*delayedTime)*exp(-delayedTime*delayedTime/(pulseAveT*pulseAveT));
 
-    for(auto i0=0;i0<numberOfGrid;i0++){
+    for(int i0=0;i0<numberOfGrid;i0++){
         pulsePotential.push_back(pulseAmpPerTime);
     }
 }
@@ -159,7 +159,7 @@ double basis::totalPopulation(CNVector_t waveFunction) {
     double buff = 0;
     double sum = 0;
 
-    for(auto i0=0;i0<size;i0++){
+    for(int i0=0;i0<size;i0++){
         buff = waveFunction[i0].absValue();
         sum += buff*buff;
     }
@@ -173,7 +173,7 @@ double basis::totalPopulation(CNVector_t waveFunction) {
 /*                          */
 CNVector_t basis::CNVectorSum(CNVector_t one, CNVector_t two){
     CNVector_t result;
-    for(auto i0=0;i0<numberOfGrid;i0++){
+    for(int i0=0;i0<numberOfGrid;i0++){
         result.push_back(one[i0]+two[i0]);
     }
     return result;
@@ -182,7 +182,7 @@ CNVector_t basis::CNVectorSum(CNVector_t one, CNVector_t two){
 CNVector_t basis::CNVectorSum(CNVector_t one, REVector_t two){
 
     CNVector_t result;
-    for(auto i0=0;i0<numberOfGrid;i0++){
+    for(int i0=0;i0<numberOfGrid;i0++){
         result.push_back(one[i0]+two[i0]);
     }
     return result;
@@ -191,7 +191,7 @@ CNVector_t basis::CNVectorSum(CNVector_t one, REVector_t two){
 CNVector_t basis::CNVectorSum(REVector_t one, CNVector_t two){
 
     CNVector_t result;
-    for(auto i0=0;i0<numberOfGrid;i0++){
+    for(int i0=0;i0<numberOfGrid;i0++){
         result.push_back(one[i0]+two[i0]);
     }
     return result;
@@ -200,7 +200,7 @@ CNVector_t basis::CNVectorSum(REVector_t one, CNVector_t two){
 CNVector_t basis::CNVectorSum(REVector_t one, REVector_t two){//Real + Real -> Complex case
 
     CNVector_t result;
-    for(auto i0=0;i0<numberOfGrid;i0++){
+    for(int i0=0;i0<numberOfGrid;i0++){
         result.push_back(complexNumber(one[i0]+two[i0],0));
     }
     return result;
@@ -208,7 +208,7 @@ CNVector_t basis::CNVectorSum(REVector_t one, REVector_t two){//Real + Real -> C
 
 REVector_t basis::REVectorSum(REVector_t one, REVector_t two){
     REVector_t result;
-    for(auto i0=0;i0<numberOfGrid;i0++){
+    for(int i0=0;i0<numberOfGrid;i0++){
         result.push_back(one[i0]+two[i0]);
     }
     return result;

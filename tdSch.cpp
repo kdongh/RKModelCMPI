@@ -3,6 +3,7 @@
 //
 
 #include "tdSch.h"
+#include <iostream>
 
 tdSch::tdSch(int numOfNode, int numOfSite, double *parameterIn) {
     //MPI Setting
@@ -18,12 +19,12 @@ tdSch::tdSch(int numOfNode, int numOfSite, double *parameterIn) {
 
     maxTimeLengthInteger = int((endTimeAU - startTimeAU) / dTimeAU);
 
-    for (auto iTime = 0;iTime<maxTimeLengthInteger;iTime++){
+    for (int iTime = 0;iTime<maxTimeLengthInteger;iTime++){
 
         currentTImeAU = iTime*dTimeAU;
 
         if(rank == 0){
-
+            std::cout<<"Rank 0"<<std::endl;
         }
 
         //  rungeKutta

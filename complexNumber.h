@@ -6,16 +6,17 @@
 #define RK_MPI_COMPLEXNUMBER_H
 
 #include <iostream>
+#include <cmath>
 
 class complexNumber {
 private:
     double real, imag;
-    double buffreal, buffimag;
 
 public:
     complexNumber(double real=0,double imag=0);
 
-    const complexNumber operator + (complexNumber& p);
+    const complexNumber operator + (complexNumber&p);
+    //const complexNumber operator + (complexNumber p);
     const complexNumber operator + (double num);
     friend const complexNumber operator+(double num, complexNumber p);
 
@@ -37,6 +38,8 @@ public:
     double absValue(complexNumber CNin);
     double absValue();
 
+    void setValue(double realIN, double imagIN);
+
     void print(){
         if(imag>0){
             std::cout<<real<<" + i"<<imag<<std::endl;
@@ -44,6 +47,7 @@ public:
             std::cout<<real<<" - i"<<-imag<<std::endl;
         }
     }
+
 
     double realN(){
         return real;

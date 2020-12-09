@@ -1,7 +1,21 @@
-cmake_minimum_required(VERSION 3.14)
+cmake_minimum_required(VERSION 2.7)
 project(RK_MPI)
-set(CMAKE_CXX_STANDARD 20)
 
-set(SOURCE_FILES main.cpp complexNumber.cpp basis.cpp rungeKutta.cpp tdSch.cpp)
+find_package(MPI REQUIRED)
+
+include_directories(${MPI_INCLUDE_PATH})
+
+set(SOURCE_FILES Main.cpp basis.cpp complexNumber.cpp tdSch.cpp)
 
 add_executable(out ${SOURCE_FILES})
+
+
+target_link_libraries(out ${MPI_LIBRARIES})
+
+if(MPI_COMPLIE_FLAGS)
+    set_target_properties(out PROPERTIES COMPLIE_FLAGS "${MPI_COMPILE_FLAGS}")
+endif()
+
+if(MPI_LINK_FLAGS)
+    set_target_properties(out PROPERTIES LINK_FLAGS "${MPI_LINK_FLAGS}")
+endif()
