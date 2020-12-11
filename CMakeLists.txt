@@ -5,7 +5,7 @@ find_package(MPI REQUIRED)
 
 include_directories(${MPI_INCLUDE_PATH})
 
-set(SOURCE_FILES Main.cpp basis.cpp complexNumber.cpp tdSch.cpp)
+set(SOURCE_FILES testMain.cpp basis.cpp complexNumber.cpp parallelizing_core.cpp tdSch.cpp)
 
 add_executable(out ${SOURCE_FILES})
 

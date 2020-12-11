@@ -9,18 +9,11 @@
 #include <mpi.h>
 #include <pthread.h>
 
-//#include "modules/atomicUnit.h"
+#include "modules/atomicUnit.h"
 #include "complexNumber.h"
 #include "basis.h"
 
 int num_thread = 16;
-
-void* Hello(void *multiArgPara);
-
-struct MultipleArg{
-    int rank;
-    int MPI_rank;
-};
 
 int main(int argc, char** argv){
 
@@ -51,7 +44,7 @@ int main(int argc, char** argv){
 
     pthread_t* thread_handles;
 
-    thread_handles = ;
+    thread_handles = (pthread_t*)malloc(num_of_thread* sizeof(pthread_t));
 
     //-------------------MPI initialize-----------------------
     MPI_Init(NULL,NULL);
@@ -67,14 +60,41 @@ int main(int argc, char** argv){
     int number_of_wavefunction_point = input_parameter_si.find("NumberOfGrid")->second;
     complexNumber send_to_right_wavefunction[number_of_wavefunction_point];
     complexNumber send_to_left_wavefunction[number_of_wavefunction_point];
+    //-------------------Wave Function initialize-------------------
+
+
+
     //-------------------rank 0-----------------------
 
     if(current_rank == 0){
+        //-------------------data OUT setting-----------------------
 
 
-    } else{
+        //-------------------thread create-----------------------
 
+        pthread_creat(&thread_handles[0],)
+        for(int i_thread=1;i_thread<num_of_thread;i_thread++){//first thread is for operating system
+            pthread_create(&thread_handles[i_thread]);
+        }
+
+        //-------------------thread join-----------------------
+        for(int i_thread=1;i_thread>num_of_thread;num_of_thread++){
+            pthread_join(thread_handles[i_thread],NULL);
+        }
+
+
+    } else{//-------------------other ranks-----------------------
+        //-------------------thread create-----------------------
+        for(int i_thread=0;i_thread<num_of_thread;i_thread++){
+            pthread_create(&thread_handles[i_thread]);
+        }
+
+        //-------------------thread join-----------------------
+        for(int i_thread=0;i_thread>num_of_thread;num_of_thread++){
+            pthread_join(thread_handles[i_thread],NULL);
+        }
     }
 
+    free(thread_handles);
     MPI_Finalize();
 }
